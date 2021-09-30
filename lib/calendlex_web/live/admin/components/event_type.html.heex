@@ -1,0 +1,42 @@
+<div {[class: "relative flex flex-col p-4 mb-2 border-gray-900 text-gray-400 bg-white cursor-pointer rounded-md shadow-sm hover:shadow-md border-t-4 #{@event_type.color}-border"]}>
+  <Dropdown.show id={"dropdown_#{@event_type.id}"} class="absolute top-4 right-4">
+    <:trigger>
+      <span class="text-gray-700"><i class="fas fa-cog"></i></span>
+    </:trigger>
+    <div class="w-48">
+      <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.Admin.EditEventTypeLive, @event_type.id), class: "px-4 py-2 text-left hover:bg-gray-50 flex gap-x-2" do %>
+        <i class="fas fa-pencil-alt"></i> Edit
+      <% end %>
+      <a class="flex px-4 py-2 text-left hover:bg-gray-50 gap-x-2"
+         phx-target={@myself}
+         phx-click="clone_me">
+        <i class="far fa-clone"></i> Clone
+      </a>
+      <a class="flex px-4 py-2 text-left hover:bg-gray-50 gap-x-2"
+         phx-target={@myself}
+         phx-click="delete_me">
+        <i class="fas fa-trash-alt"></i> Delete
+      </a>
+    </div>
+  </Dropdown.show>
+  <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.Admin.EditEventTypeLive, @event_type.id) do %>
+    <header class="mb-4">
+      <h3 class="mb-1 text-xl text-gray-800"><%= @event_type.name %></h3>
+      <div class="mb-2 text-sm"><%= @event_type.duration %> mins</div>
+      <div><%= @event_type.description %></div>
+    </header>
+    <div class="flex-1">
+      <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.EventTypeLive, @event_type.slug), class: "text-blue-500 hover:underline" do %>View booking page<% end %>
+    </div>
+  <% end %>
+  <footer class="flex items-center h-16 px-4 mt-4 -m-4 text-sm border-t border-gray-200">
+    <div
+        id={"clipboard_#{@event_type.id}"}
+        class="text-blue-500"
+        data-content={Routes.live_url(@socket, CalendlexWeb.EventTypeLive, @event_type.slug)}
+        phx-hook="Clipboard">
+      <i class="far fa-clone"></i> Copy link
+    </div>
+  </footer>
+</div>
+

@@ -1,0 +1,23 @@
+<div class="flex mt-4 align-middle gap-x-6">
+  <div class="flex-1"></div>
+  <div class="flex-1 text-right">
+    <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.Admin.NewEventTypeLive), class: "inline-block border border-blue-500 rounded-full px-4 py-1 text-blue-500 hover:bg-blue-100 cursor-pointer" do %>
+      <i class="fas fa-plus"></i> New event type
+    <% end %>
+  </div>
+</div>
+<div class="mt-4 grid grid-cols-3 gap-6">
+  <%= for event_type <- @event_types do %>
+    <.live_component module={CalendlexWeb.Admin.Components.EventType} id={"event_type_" <> event_type.id} event_type={event_type} />
+  <% end %>
+</div>
+<%= if @delete_event_type  do %>
+  <Modal.show>
+    <:header>Delete <%= @delete_event_type.name %></:header>
+    <p>Users will be unable to schedule further meetings with deleted event types. Meetings previously scheduled will not be affected.</p>
+    <:footer>
+      <Modal.cancel_button>No</Modal.cancel_button>
+      <Modal.confirm_button event="delete">Yes</Modal.confirm_button>
+    </:footer>
+  </Modal.show>
+<% end %>

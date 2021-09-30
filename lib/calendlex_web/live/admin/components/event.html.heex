@@ -1,0 +1,48 @@
+<div
+  id={"event_#{@event.id}"}
+  class="px-6 -mx-6 border-t border-gray-200 event"
+  phx-click={JS.toggle(to: "#event_#{@event.id} .event-details", in: "block", out: "hidden")}
+  >
+  <div class="flex items-start p-6 -mx-6 text-gray-500 cursor-pointer gap-x-6 hover:bg-blue-50">
+    <div class="relative flex items-center w-2/6">
+      <div {[class: "inline-block w-8 h-8 #{@event.event_type.color}-bg rounded-full absolute"]}></div>
+      <div class={cancelled_classes(@event, "pl-12")}>
+        <%= format_time(@event, @time_zone) %>
+      </div>
+    </div>
+    <div class={cancelled_classes(@event, "w-3/6")}>
+      <div class="font-bold text-gray-900"><%= @event.name %></div>
+      <div>Event type <strong class="text-gray-900"><%= @event.event_type.name %></strong></div>
+    </div>
+    <div class="w-1/6 no-underline">Details</div>
+  </div>
+  <div class="hidden p-6 pt-0 -mx-6 text-gray-500 event-details">
+    <div class="flex items-start">
+      <div class="w-2/6">
+        <div class="w-full pl-12">
+          <%= if Event.is_upcoming(@event) && Event.is_active(@event) do %>
+            <button
+                class="flex items-center w-4/5 px-4 py-2 border border-gray-800 rounded-full gap-x-1"
+                phx-click="cancel_event"
+                phx-value-id={@event.id}>
+              <i class="far fa-trash-alt"></i> Cancel
+            </button>
+          <% end %>
+          <div class="w-4/5 pt-4 mt-4 border-t border-gray-200">
+            <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.Admin.EditEventTypeLive, @event.event_type.id), class: "text-blue-500 hover:underline" do %>
+              <i class="far fa-edit"></i> Edit event type
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="w-4/6 p-2 pt-6 border-t border-gray-200">
+        <label class="mb-1 text-sm font-bold text-gray-900 uppercase">Email</label>
+        <div class="mb-4 text-gray-700"><%= @event.email %></div>
+        <label class="mb-1 text-sm font-bold text-gray-900 uppercase">Time zone</label>
+        <div class="mb-4 text-gray-700"><%= @event.time_zone %></div>
+        <label class="mb-1 text-sm font-bold text-gray-900 uppercase">Comments</label>
+        <div class="mb-4 text-gray-700"><%= @event.comments %></div>
+      </div>
+    </div>
+  </div>
+</div>

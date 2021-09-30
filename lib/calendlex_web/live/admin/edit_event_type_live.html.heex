@@ -1,0 +1,13 @@
+<div class="w-4/5 mx-auto mb-6 text-right">
+  <%= link to: Routes.live_path(@socket, CalendlexWeb.EventTypeLive, @event_type.slug), target: "_blank", class: "text-blue-500" do %>
+    <i class="fas fa-external-link-alt"></i> view live page
+  <% end %>
+</div>
+<div class="w-4/5 p-6 mx-auto mb-2 bg-white border border-gray-200 shadow-md rounded-md">
+  <.live_component
+     id="edit_event_type_form"
+     module={CalendlexWeb.Admin.Components.EventTypeForm}
+     event_type={@event_type}
+     changeset={@changeset}
+     />
+</div>

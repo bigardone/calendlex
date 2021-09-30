@@ -1,0 +1,23 @@
+{
+  "name": "calendlex_assets",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "node esbuild.js",
+    "deploy": "node esbuild.js --deploy && NODE_ENV=production postcss css/app.css -o ../priv/static/assets/app.css",
+    "watch": "node esbuild.js --watch"
+  },
+  "dependencies": {
+    "phoenix": "file:../deps/phoenix",
+    "phoenix_html": "file:../deps/phoenix_html",
+    "phoenix_live_view": "file:../deps/phoenix_live_view"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "esbuild": "^0.13.12",
+    "postcss": "^8.3.11",
+    "postcss-cli": "^9.0.1",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^2.2.19"
+  }
+}

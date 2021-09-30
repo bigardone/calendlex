@@ -1,0 +1,71 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.pink-border {
+  @apply border-pink-500;
+}
+
+.purple-border {
+  @apply border-purple-500;
+}
+
+.blue-border {
+  @apply border-blue-500;
+}
+
+.gray-border {
+  @apply border-gray-500;
+}
+
+.red-border {
+  @apply border-red-500;
+}
+
+.yellow-border {
+  @apply border-yellow-500;
+}
+
+.green-border {
+  @apply border-green-500;
+}
+
+.indigo-border {
+  @apply border-indigo-500;
+}
+
+.pink-bg {
+  @apply bg-pink-500;
+}
+
+.purple-bg {
+  @apply bg-purple-500;
+}
+
+.blue-bg {
+  @apply bg-blue-500;
+}
+
+.gray-bg {
+  @apply bg-gray-500;
+}
+
+.red-bg {
+  @apply bg-red-500;
+}
+
+.yellow-bg {
+  @apply bg-yellow-500;
+}
+
+.green-bg {
+  @apply bg-green-500;
+}
+
+.indigo-bg {
+  @apply bg-indigo-500;
+}
+
+.phx-no-feedback.invalid-feedback, .phx-no-feedback .invalid-feedback {
+  display: none;
+}

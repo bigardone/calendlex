@@ -1,0 +1,52 @@
+<div>
+  <.form let={f} for={@changeset} phx-target={@myself} phx-change="change" phx-submit="submit">
+  <header class="flex items-center px-6 pb-6 mb-6 -mx-6 text-right border-b border-gray-300 gap-x-4">
+    <h3 class="text-gray-900">What event is this?</h3>
+  </header>
+  <div class="w-3/5 mb-6">
+    <%= label f, :name, class: "block mb-2 text-sm" %>
+    <%= text_input f, :name, class: "w-full p-2 border rounded-md", autofocus: "", required: "" %>
+    <%= error_tag f, :name %>
+  </div>
+  <div class="w-3/5 mb-6">
+    <%= label f, :description, class: "block mb-2 text-sm" %>
+    <%= textarea f, :description, class: "w-full p-2 border h-36 rounded-md" %>
+    <%= error_tag f, :description %>
+  </div>
+  <div class="w-3/5 mb-6">
+    <%= label f, :slug, class: "block mb-2 text-sm" %>
+    <%= text_input f, :slug, class: input_classes(f, :slug), readonly: "" %>
+    <%= error_tag f, :slug %>
+  </div>
+  <div class="w-3/5 mb-6">
+    <%= label f, :duration, class: "block mb-2 text-sm" %>
+    <div class="flex items-center gap-x-2">
+      <%= text_input f, :duration, class: "w-20 p-2 border rounded-md", required: "", type: "number", min: 1 %>
+      minutes
+    </div>
+    <%= error_tag f, :duration %>
+  </div>
+  <div class="w-3/5 mb-6">
+    <%= label f, :color, class: "block mb-2 text-sm" %>
+    <div class="flex gap-x-2">
+      <%= for color <- ~w(gray red yellow green blue indigo pink purple) do %>
+        <label class="relative cursor-pointer" phx-target={@myself} phx-click="set_color" phx-value-color={color}>
+          <div class={color_classes(color)}></div>
+          <%= radio_button f, :color, color, class: "hidden" %>
+          <%= if @current_color == color do %>
+            <span class="absolute z-10 inline-block w-4 h-4 text-white top-1 left-1/2 -translate-x-1/2">
+              <i class="fas fa-check"></i>
+            </span>
+          <% end %>
+        </label>
+      <% end %>
+    </div>
+    <%= error_tag f, :color %>
+  </div>
+  <footer class="flex items-center justify-end px-6 pt-6 -mx-6 text-right border-t border-gray-300 gap-x-4">
+    <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.Admin.EventTypesLive) do %>Cancel<% end %>
+    <button class="px-4 py-2 text-white bg-blue-600 rounded-full" type="submit" phx-disable-with="Saving...">Save</button>
+  </footer>
+  </.form>
+</div>
+

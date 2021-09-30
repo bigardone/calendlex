@@ -1,0 +1,64 @@
+<div>
+  <.form for={:form} phx-target={@myself} phx-submit="submit">
+  <input type="hidden" name="form[period]" value={@form["period"]} />
+  <div class="flex items-center gap-x-12">
+    <div>
+      <label class="block mb-1 text-sm font-semibold text-gray-400">Event types</label>
+      <Dropdown.show id="dropdown_event_types">
+        <:trigger>
+          <div class="text-blue-500">
+            <%= event_types_text(@form) %> <span class="text-xs"><i class="fas fa-chevron-down"></i></span>
+          </div>
+        </:trigger>
+        <div class="py-2 -mt-2 bg-gray-50">
+          <%= for event_type <- @event_types do %>
+            <div class="flex px-4 py-1 text-left">
+              <label class="flex items-center w-48 py-1 cursor-pointer gap-x-2">
+                <input
+                    name="form[event_type_id][]"
+                    type="checkbox"
+                    value={event_type.id}
+                    checked={is_event_type_selected(event_type.id, @form)} /><%= event_type.name %>
+              </label>
+            </div>
+          <% end %>
+        </div>
+        <div class="flex p-4 bg-white border-t gap-x-4">
+          <a class="flex-1 px-4 py-1 text-sm text-center border border-gray-800 rounded-full cursor-pointer inlinle-block dropdown-close">Cancel</a>
+          <button class="flex-1 px-4 py-1 text-sm text-white bg-blue-600 rounded-full" type="submit">Apply</button>
+        </div>
+      </Dropdown.show>
+      </div>
+      <div>
+        <label class="block mb-1 text-sm font-semibold text-gray-400">Status</label>
+        <Dropdown.show id="dropdown_statuses">
+          <:trigger>
+          <div class="text-blue-500">
+            <%= status_text(@form) %> <span class="text-xs"><i class="fas fa-chevron-down"></i></span>
+          </div>
+          </:trigger>
+          <div class="py-2 -mt-2 bg-gray-50">
+            <%= for status <- @statuses do %>
+              <div class="flex px-4 py-1 text-left">
+                <label class="flex items-center w-48 py-1 capitalize cursor-pointer gap-x-2">
+                  <input
+                      name="form[status][]"
+                      type="checkbox"
+                      value={status}
+                      checked={is_status_selected(status, @form)} /><%= status %>
+                </label>
+              </div>
+            <% end %>
+          </div>
+          <div class="flex p-4 bg-white border-t gap-x-4">
+            <a class="flex-1 px-4 py-1 text-sm text-center border border-gray-800 rounded-full cursor-pointer inlinle-block dropdown-close">Cancel</a>
+            <button class="flex-1 px-4 py-1 text-sm text-white bg-blue-600 rounded-full" type="submit">Apply</button>
+          </div>
+        </Dropdown.show>
+      </div>
+      <div class="ml-auto">
+        <a class="px-4 py-2 text-sm text-center border border-gray-800 rounded-full cursor-pointer inlinle-block" phx-target={@myself} phx-click="reset">Reset</a>
+      </div>
+    </div>
+    </.form>
+  </div>

@@ -1,0 +1,53 @@
+<div class="w-3/5 mx-auto">
+  <div class="flex flex-auto p-6 mb-2 bg-white border border-gray-200 shadow-lg rounded-md gap-x-2">
+    <div class="flex-1">
+      <div class="mb-4">
+        <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.EventTypeLive, @event_type.slug) do %>
+          <div>
+            <div class="flex items-center justify-center inline-block text-xl text-blue-500 border rounded-full w-9 h-9">
+              <i class="fas fa-arrow-left"></i>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <h4 class="text-gray-500">Bigardone</h4>
+      <h1 class="my-3 text-xl text-black"><%= @event_type.name %></h1>
+      <div class="flex flex-row items-center mb-2 font-bold text-gray-500 gap-2">
+        <i class="far fa-clock"></i>
+        <%= @event_type.duration %> min
+      </div>
+      <div class="flex flex-row items-center mb-2 font-bold text-green-500 gap-2">
+        <i class="far fa-calendar-alt"></i>
+        <%= schedule_string(@start_at, @end_at, @time_zone) %>
+      </div>
+      <div class="flex flex-row items-center font-bold text-gray-500 gap-2">
+        <i class="fas fa-globe-americas"></i>
+        <%= @time_zone %>
+      </div>
+    </div>
+    <div class="w-3/5 px-8 border-l border-gray-100">
+      <header class="mb-8">
+          <h3 class="text-lg font-semibold text-gray-900">Enter details</h3>
+      </header>
+      <.form let={f} for={@changeset} phx-submit="submit">
+        <div class="w-4/5 mb-6">
+          <%= label f, :name, class: "block mb-2 text-sm" %>
+          <%= text_input f, :name, class: "w-full p-2 border rounded-md", autofocus: "", required: "" %>
+          <%= error_tag f, :name %>
+        </div>
+        <div class="w-4/5 mb-6">
+          <%= label f, :email, class: "block mb-2 text-sm" %>
+          <%= text_input f, :email, class: "w-full p-2 border rounded-md", type: "email", required: "" %>
+          <%= error_tag f, :email %>
+        </div>
+        <div class="w-4/5 mb-6">
+          <%= label f, :comments, class: "block mb-2 text-sm" %>
+          <%= textarea f, :comments, class: "w-full p-2 border h-36 rounded-md" %>
+        </div>
+        <div class="w-4/5 mb-6">
+          <button class="px-4 py-2 text-white bg-blue-600 rounded-full" type="submit" phx-disable-with="Scheduling event...">Schedule event</button>
+        </div>
+      </.form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="w-2/5 mx-auto">
+  <div class="flex flex-auto p-12 mb-2 bg-white border border-gray-200 shadow-md rounded-md gap-x-2">
+    <div class="flex-1 text-center">
+      <header class="mb-8">
+        <h1 class="mb-4 text-xl font-bold text-gray-500 text-gray-800">Confirmed</h1>
+        <p>You are scheduled with <%= @admin.name %>.</p>
+      </header>
+      <h2 class="my-3 text-xl font-bold text-gray-800"><%= @event_type.name %></h2>
+      <div class="flex flex-row items-center justify-center font-bold text-green-500 gap-2">
+        <i class="far fa-calendar-alt"></i>
+        <%= schedule_string(@event.start_at, @event.end_at, @time_zone) %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="w-3/5 mx-auto">
+  <div class="flex flex-auto p-6 mb-2 bg-white border border-gray-200 shadow-md rounded-md gap-x-2">
+    <div class="flex-1">
+      <div class="mb-4">
+        <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.PageLive) do %>
+          <div class="flex items-center justify-center inline-block text-xl text-blue-500 border rounded-full w-9 h-9">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+        <% end %>
+      </div>
+      <h4 class="text-gray-500">Bigardone</h4>
+      <h1 class="my-3 text-xl text-black"><%= @event_type.name %></h1>
+      <div class="flex flex-row items-center mb-2 text-gray-500 gap-2">
+        <div class="text-gray-300">
+          <i class="far fa-clock"></i>
+        </div>
+        <%= @event_type.duration %> min
+      </div>
+    </div>
+    <div class="px-8 border-l border-gray-100">
+      <header class="mb-8">
+          <h3 class="text-lg font-semibold text-gray-900">Select a date & time</h3>
+      </header>
+      <div class="flex items-center mb-8">
+        <div class="flex-1">
+          <%= Timex.format!(@current, "{Mshort} {YYYY}") %>
+        </div>
+        <div class="flex justify-end flex-1 text-right">
+          <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200" phx-click="previous_month">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200" phx-click="next_month">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="mb-6 text-center uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
+        <div class="text-xs">Mon</div>
+        <div class="text-xs">Tue</div>
+        <div class="text-xs">Wed</div>
+        <div class="text-xs">Thu</div>
+        <div class="text-xs">Fri</div>
+        <div class="text-xs">Sat</div>
+        <div class="text-xs">Sun</div>
+        <%= for i <- 0..@end_of_month.day - 1 do %>
+          <%= live_component CalendlexWeb.Components.CalendarDay, id: "day-#{i}", current: @current, date: Timex.shift(@beginning_of_month, days: i), time_zone: @time_zone %>
+        <% end %>
+      </div>
+      <div class="flex items-center gap-x-1">
+        <i class="fas fa-globe-americas"></i>
+        <%= @time_zone %>
+      </div>
+    </div>
+    <%= if @time_slots !== [] do %>
+      <div class="pl-8 overflow-y-auto border-l border-gray-100 w-80 h-96">
+        <header class="mb-8">
+          <h3 class="text-lg font-semibold text-gray-900">
+            <%= Timex.format!(@selected_date, "{WDfull}, {Mshort} {D}") %>
+          </h3>
+        </header>
+        <div class="flex-1 overflow-y-auto">
+          <%= for time_slot <- @time_slots do %>
+            <%= live_component CalendlexWeb.Components.TimeSlot, id: "time_slot_#{time_slot}", time_slot: time_slot, time_zone: @time_zone, event_type: @event_type %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

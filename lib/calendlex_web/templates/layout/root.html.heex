@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <%= csrf_meta_tag() %>
+    <%= live_title_tag assigns[:page_title] || "Calendlex", suffix: " · Calendlex" %>
+    <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
+    <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
+    <script src="https://kit.fontawesome.com/9539f8cd16.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/x-icon" href={Routes.static_path(@conn, "/favicon.ico")} >
+  </head>
+  <body class="antialiased text-gray-600 bg-gray-100">
+    <div class="flex flex-col h-screen">
+      <%= @inner_content %>
+      <footer class="p-4 mt-auto text-sm text-center text-gray-400 leading-6">
+        <p>Crafted with ❤ and <a class="font-bold text-blue-500" href="https://elm-lang.org/" target="_blank" class="cool">Phoenix</a> by <a class="font-bold text-blue-500" href="https://github.com/bigardone" target="_blank" class="cool">bigardone</a>.</p>
+        <p><a class="font-bold text-blue-500" href="https://github.com/bigardone/calendlex" target="_blank">Source code</a> available on GitHub.</p>
+      </footer>
+    </div>
+  </body>
+</html>

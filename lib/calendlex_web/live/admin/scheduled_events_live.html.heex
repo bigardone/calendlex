@@ -1,0 +1,61 @@
+<div class="mb-6 text-right text-gray-400">Displaying <%= @events |> Keyword.values() |> length() %> events</div>
+<div class="p-6 mx-auto mb-2 bg-white border border-gray-200 shadow-md rounded-md">
+  <nav class="flex items-center px-6 mb-0 -m-6 gap-x-6">
+    <%= live_patch "Upcoming", to: Routes.live_path(@socket, CalendlexWeb.Admin.ScheduledEventsLive, period: upcoming_period()), class: nav_link_classes(@period == upcoming_period()) %>
+    <%= live_patch "Past", to: Routes.live_path(@socket, CalendlexWeb.Admin.ScheduledEventsLive, period: past_period()), class: nav_link_classes(@period == past_period()) %>
+    <div class="ml-auto">
+      <%= if !@show_filter do %>
+        <button
+            class="px-4 py-1 text-gray-500 rounded rounded-md hover:bg-gray-50 transition-colors"
+            phx-click="show_filter">
+          <i class="inline-block fas fa-sliders-h transform rotate-90"></i> Filter
+        </button>
+      <% else %>
+        <button
+            class="px-4 py-1 text-white bg-gray-400 rounded rounded-md"
+            phx-click="show_filter">
+          <i class="fas fa-times"></i> Close
+        </button>
+      <% end %>
+    </div>
+  </nav>
+  <%= if @show_filter do %>
+    <div class="px-6 py-4 -mx-6 bg-white border-t border-gray-200">
+      <.live_component module={CalendlexWeb.Admin.Components.EventsFilterForm} id="events_filter_form" form={@filter_form} event_types={@event_types} />
+    </div>
+  <% end %>
+  <%= if Enum.empty?(@events) do %>
+    <div class="flex items-center justify-center px-6 py-4 -mx-6 bg-white border-t border-gray-200 h-52">
+      <div class="text-center text-gray-400">
+        <div class="mb-4 text-5xl">
+          <i class="fa fa-calendar-alt"></i>
+        </div>
+        <div class="text-lg font-bold ">No events found</div>
+      </div>
+    </div>
+  <% end %>
+  <%= for {date, date_events} <- @events do %>
+    <div class="px-6 py-4 -mx-6 bg-gray-100 border-t border-gray-200">
+      <%= format_date(date) %>
+    </div>
+    <%= for event <- date_events do %>
+      <.live_component
+         module={CalendlexWeb.Admin.Components.Event}
+         id={event.id}
+         event={event}
+         time_zone={@admin.time_zone}/>
+       <% end %>
+     <% end %>
+</div>
+<%= if @cancel_event !== nil do %>
+  <Modal.show>
+    <:header>Cancel event</:header>
+    <div class="mb-2"><%= @cancel_event.event_type.name %></div>
+    <div class="mb-2 font-bold text-gray-900"><%= @cancel_event.name %></div>
+    <p>Please confirm that you would like to cancel this event. A cancellation email will also go out to the invitee.</p>
+    <:footer>
+      <Modal.cancel_button>No, don't cancel</Modal.cancel_button>
+      <Modal.confirm_button event="cancel">Yes, cancel</Modal.confirm_button>
+    </:footer>
+  </Modal.show>
+<% end %>
