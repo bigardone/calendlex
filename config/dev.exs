@@ -23,7 +23,8 @@ config :calendlex, CalendlexWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: [
-    node: ["esbuild.js", "--watch", cd: Path.expand("../assets", __DIR__)],
+    # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
     npx: [
       "tailwindcss",
       "--input=css/app.css",
