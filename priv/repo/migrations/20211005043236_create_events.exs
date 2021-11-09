@@ -12,7 +12,7 @@ defmodule Calendlex.Repo.Migrations.CreateEvents do
       add :comments, :text
       add :cancelled_at, :utc_datetime
 
-      add :event_type_id, references(:event_types, on_delete: :nothing, type: :binary_id),
+      add :event_type_id, references(:event_types, on_delete: :delete_all, type: :binary_id),
         null: false
 
       timestamps()
