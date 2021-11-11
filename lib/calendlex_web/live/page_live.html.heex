@@ -5,16 +5,8 @@
       <p class="text-gray-500">Welcome to my scheduling page. Please follow the instructions to add an event to my calendar.</p>
     </header>
     <div class="mt-4 grid grid-cols-2 gap-x-6">
-      <%= for %EventType{name: name, slug: slug, color: color} <- @event_types do %>
-        <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.EventTypeLive, slug) do %>
-          <div class="flex items-center p-6 pb-20 text-gray-400 bg-white border-t border-gray-300 cursor-pointer hover:bg-gray-200 gap-x-4">
-            <div {[class: "inline-block w-8 h-8 #{color}-bg rounded-full border-2 border-white"]}  />
-            <div>
-              <h3 class="font-bold text-gray-900"><%= name %></h3>
-            </div>
-            <div class="ml-auto text-xl"><i class="fas fa-caret-right"></i></div>
-          </div>
-        <% end %>
+      <%= for event_type <- @event_types do %>
+        <EventType.event_type event_type={event_type} path={Routes.live_path(@socket, CalendlexWeb.EventTypeLive, event_type.slug)} />
       <% end %>
     </div>
   </div>

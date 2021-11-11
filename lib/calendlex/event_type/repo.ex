@@ -1,10 +1,11 @@
 defmodule Calendlex.EventType.Repo do
   alias Calendlex.{EventType, Repo}
-  import Ecto.Query, only: [where: 3]
+  import Ecto.Query, only: [where: 3, order_by: 3]
 
   def all do
     EventType
     |> where([e], is_nil(e.deleted_at))
+    |> order_by([e], e.name)
     |> Repo.all()
   end
 
