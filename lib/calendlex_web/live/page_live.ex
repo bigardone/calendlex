@@ -3,7 +3,7 @@ defmodule CalendlexWeb.PageLive do
 
   alias CalendlexWeb.Components.EventType
 
-  @impl true
+  @impl LiveView
   def mount(_params, _session, socket) do
     event_types = Calendlex.available_event_types()
 

@@ -3,7 +3,7 @@ defmodule CalendlexWeb.Components.CalendarDay do
 
   alias CalendlexWeb.LayoutView
 
-  @impl true
+  @impl LiveComponent
   def update(%{date: date, time_zone: time_zone} = assigns, socket) do
     weekday = Timex.weekday(date, :monday)
     disabled = Timex.compare(date, Timex.today(time_zone)) == -1
@@ -17,7 +17,7 @@ defmodule CalendlexWeb.Components.CalendarDay do
      |> assign(:class_list, class_list(%{disabled: disabled, weekday: weekday}))}
   end
 
-  @impl true
+  @impl LiveComponent
   def handle_event("select", _, %{assigns: %{date: date}} = socket) do
     send(self(), {:select_day, date})
 

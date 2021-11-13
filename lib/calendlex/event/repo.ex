@@ -1,6 +1,7 @@
 defmodule Calendlex.Event.Repo do
-  alias Calendlex.{Event, Repo}
   import Ecto.Query
+
+  alias Calendlex.{Event, Repo}
 
   def get(id) do
     Event

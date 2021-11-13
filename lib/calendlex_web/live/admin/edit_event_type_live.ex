@@ -3,7 +3,7 @@ defmodule CalendlexWeb.Admin.EditEventTypeLive do
 
   alias Calendlex.EventType
 
-  @impl true
+  @impl LiveView
   def mount(%{"id" => id}, _session, socket) do
     case Calendlex.get_event_type_by_id(id) do
       {:ok, %EventType{name: name} = event_type} ->
@@ -21,12 +21,12 @@ defmodule CalendlexWeb.Admin.EditEventTypeLive do
     end
   end
 
-  @impl true
+  @impl LiveView
   def handle_event("build_slug", _, socket) do
     {:noreply, socket}
   end
 
-  @impl true
+  @impl LiveView
   def handle_info({:submit, params}, %{assigns: %{event_type: event_type}} = socket) do
     event_type
     |> Calendlex.update_event_type(params)

@@ -3,7 +3,7 @@ defmodule CalendlexWeb.EventTypeLive do
 
   alias Timex.Duration
 
-  @impl true
+  @impl LiveView
   def mount(%{"event_type_slug" => slug} = params, _session, socket) do
     case Calendlex.get_event_type_by_slug(slug) do
       {:ok, event_type} ->
@@ -21,7 +21,7 @@ defmodule CalendlexWeb.EventTypeLive do
     end
   end
 
-  @impl true
+  @impl LiveView
   def handle_event("next_month", _, socket) do
     socket.assigns.current
     |> Timex.end_of_month()
@@ -36,7 +36,7 @@ defmodule CalendlexWeb.EventTypeLive do
     |> shift_month(socket)
   end
 
-  @impl true
+  @impl LiveView
   def handle_info({:select_day, date}, socket) do
     socket =
       socket
@@ -53,7 +53,7 @@ defmodule CalendlexWeb.EventTypeLive do
     {:noreply, socket}
   end
 
-  @impl true
+  @impl LiveView
   def handle_params(_unsigned_params, _uri, socket) do
     {:noreply, socket}
   end

@@ -1,7 +1,7 @@
 defmodule CalendlexWeb.Components.TimeSlot do
   use CalendlexWeb, :live_component
 
-  @impl true
+  @impl LiveComponent
   def update(%{event_type: event_type, time_slot: time_slot, time_zone: time_zone}, socket) do
     text =
       time_slot
@@ -15,7 +15,7 @@ defmodule CalendlexWeb.Components.TimeSlot do
      |> assign(:text, text)}
   end
 
-  @impl true
+  @impl LiveComponent
   def handle_event(
         "select",
         _,

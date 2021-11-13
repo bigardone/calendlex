@@ -48,6 +48,8 @@ defmodule CalendlexWeb do
 
       import CalendlexWeb.LayoutView
 
+      alias Phoenix.LiveView
+
       unquote(view_helpers())
     end
   end
@@ -58,6 +60,8 @@ defmodule CalendlexWeb do
         layout: {CalendlexWeb.LayoutView, "admin.html"}
 
       import CalendlexWeb.LayoutView
+
+      alias Phoenix.LiveView
 
       unquote(view_helpers())
     end

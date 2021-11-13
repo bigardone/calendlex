@@ -3,7 +3,7 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
 
   alias CalendlexWeb.Admin.Components.Modal
 
-  @impl true
+  @impl LiveView
   def mount(_params, _session, socket) do
     event_types = Calendlex.available_event_types()
 
@@ -17,12 +17,12 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
     {:ok, socket, temporary_assigns: [event_types: []]}
   end
 
-  @impl true
+  @impl LiveView
   def handle_info({:confirm_delete, event_type}, socket) do
     {:noreply, assign(socket, delete_event_type: event_type)}
   end
 
-  @impl true
+  @impl LiveView
   def handle_event("delete", _, socket) do
     event_type = socket.assigns.delete_event_type
 

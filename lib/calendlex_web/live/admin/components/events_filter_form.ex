@@ -3,18 +3,18 @@ defmodule CalendlexWeb.Admin.Components.EventsFilterForm do
 
   alias CalendlexWeb.Admin.Components.Dropdown
 
-  @impl true
+  @impl LiveComponent
   def update(%{form: form, event_types: event_types}, socket) do
     statuses = ~w(active cancelled)
     {:ok, assign(socket, event_types: event_types, statuses: statuses, form: form)}
   end
 
-  @impl true
+  @impl LiveComponent
   def handle_event("change", %{"form" => form}, socket) do
     {:noreply, assign(socket, form: form)}
   end
 
-  @impl true
+  @impl LiveComponent
   def handle_event("submit", %{"form" => form}, socket) do
     send(self(), {:filter_submit, form})
 

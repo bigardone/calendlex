@@ -6,7 +6,7 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
   @upcoming_period "upcoming"
   @past_period "past"
 
-  @impl true
+  @impl LiveView
   def mount(_params, _session, socket) do
     period = @upcoming_period
     events = %{}
@@ -26,7 +26,7 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
     {:ok, socket, temporary_assigns: [events: %{}]}
   end
 
-  @impl true
+  @impl LiveView
   def handle_params(params, _uri, socket) do
     period =
       params
@@ -46,7 +46,7 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
     {:noreply, socket}
   end
 
-  @impl true
+  @impl LiveView
   def handle_event("cancel_event", %{"id" => id}, socket) do
     {:ok, event} = Calendlex.get_event_by_id(id)
 
@@ -79,7 +79,7 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
     end
   end
 
-  @impl true
+  @impl LiveView
   def handle_info({:filter_submit, filter_form}, socket) do
     socket =
       socket

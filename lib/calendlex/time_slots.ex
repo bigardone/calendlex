@@ -1,8 +1,8 @@
 defmodule Calendlex.TimeSlots do
+  alias Calendlex.Event.Repo, as: EventRepo
+
   @day_start 9
   @day_end 19
-
-  alias Calendlex.Event.Repo, as: EventRepo
 
   @spec build(Date.t(), String.t(), non_neg_integer) :: [DateTime.t()]
   def build(date, time_zone, duration) do

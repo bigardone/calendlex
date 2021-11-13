@@ -3,7 +3,7 @@ defmodule CalendlexWeb.ScheduleEventLive do
 
   alias Calendlex.Event
 
-  @impl true
+  @impl LiveView
   def mount(%{"event_type_slug" => slug, "time_slot" => time_slot}, _session, socket) do
     with {:ok, event_type} <- Calendlex.get_event_type_by_slug(slug),
          {:ok, start_at, _} <- DateTime.from_iso8601(time_slot) do
@@ -24,7 +24,7 @@ defmodule CalendlexWeb.ScheduleEventLive do
     end
   end
 
-  @impl true
+  @impl LiveView
   def handle_event(
         "submit",
         %{"event" => event},
