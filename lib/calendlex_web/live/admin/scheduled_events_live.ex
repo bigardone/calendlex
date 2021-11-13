@@ -10,7 +10,7 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
   def mount(_params, _session, socket) do
     period = @upcoming_period
     events = %{}
-    event_types = Calendlex.event_types()
+    event_types = Calendlex.available_event_types()
 
     socket =
       socket

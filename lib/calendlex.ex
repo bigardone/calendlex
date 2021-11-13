@@ -7,7 +7,7 @@ defmodule Calendlex do
   if it comes from the database, an external API or others.
   """
 
-  defdelegate event_types, to: Calendlex.EventType.Repo, as: :all
+  defdelegate available_event_types, to: Calendlex.EventType.Repo, as: :available
 
   defdelegate get_event_type_by_slug(slug),
     to: Calendlex.EventType.Repo,

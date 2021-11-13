@@ -5,7 +5,7 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    event_types = Calendlex.event_types()
+    event_types = Calendlex.available_event_types()
 
     socket =
       socket
@@ -31,7 +31,7 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
     socket =
       socket
       |> assign(delete_event_type: nil)
-      |> update(:event_types, fn _ -> Calendlex.event_types() end)
+      |> update(:event_types, fn _ -> Calendlex.available_event_types() end)
       |> put_flash(:info, "Deleted")
 
     {:noreply, socket}
