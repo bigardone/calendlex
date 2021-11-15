@@ -1,21 +1,21 @@
 defmodule CalendlexWeb.Live.InitAssigns do
   import Phoenix.LiveView
 
-  def on_mount(:user, _params, _session, socket) do
-    admin = Application.get_env(:calendlex, :admin)
-    time_zone = get_connect_params(socket)["timezone"] || admin.time_zone
+  def on_mount(:default, _params, _session, socket) do
+    owner = Application.get_env(:calendlex, :owner)
+    time_zone = get_connect_params(socket)["timezone"] || owner.time_zone
 
     socket =
       socket
       |> assign(:time_zone, time_zone)
-      |> assign(:admin, admin)
+      |> assign(:owner, owner)
 
     {:cont, socket}
   end
 
-  def on_mount(:admin, _params, _session, socket) do
-    admin = Application.get_env(:calendlex, :admin)
+  def on_mount(:private, _params, _session, socket) do
+    owner = Application.get_env(:calendlex, :owner)
 
-    {:cont, assign(socket, :admin, admin)}
+    {:cont, assign(socket, :owner, owner)}
   end
 end

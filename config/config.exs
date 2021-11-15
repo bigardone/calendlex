@@ -10,7 +10,7 @@ import Config
 config :calendlex,
   ecto_repos: [Calendlex.Repo],
   generators: [binary_id: true],
-  admin: %{
+  owner: %{
     name: "Bigardone",
     time_zone: "Europe/Madrid"
   },

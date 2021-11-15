@@ -15,7 +15,7 @@ defmodule CalendlexWeb.Router do
     plug :basic_auth, Application.compile_env(:calendlex, :basic_auth)
   end
 
-  live_session :admin, on_mount: {CalendlexWeb.Live.InitAssigns, :admin} do
+  live_session :private, on_mount: {CalendlexWeb.Live.InitAssigns, :private} do
     scope "/admin", CalendlexWeb.Admin do
       pipe_through :browser
       pipe_through :auth
@@ -27,7 +27,7 @@ defmodule CalendlexWeb.Router do
     end
   end
 
-  live_session :default, on_mount: {CalendlexWeb.Live.InitAssigns, :user} do
+  live_session :public, on_mount: CalendlexWeb.Live.InitAssigns do
     scope "/", CalendlexWeb do
       pipe_through :browser
 

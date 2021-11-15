@@ -71,7 +71,7 @@ defmodule CalendlexWeb.EventTypeLive do
 
   defp assign_time_slots(socket, %{"date" => _}) do
     date = socket.assigns.current
-    owner_time_zone = socket.assigns.admin.time_zone
+    owner_time_zone = socket.assigns.owner.time_zone
     event_duration = socket.assigns.event_type.duration
 
     time_slots = Calendlex.build_time_slots(date, owner_time_zone, event_duration)
