@@ -1,7 +1,7 @@
 defmodule CalendlexWeb.Components.EventType do
   use Phoenix.Component
 
-  def event_type(assigns) do
+  def selector(assigns) do
     ~L"""
     <%= live_redirect to: @path do %>
       <div class="flex items-center p-6 pb-20 text-gray-400 bg-white border-t border-gray-300 cursor-pointer hover:bg-gray-200 gap-x-4">

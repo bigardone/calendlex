@@ -6,7 +6,7 @@
     </header>
     <div class="mt-4 grid grid-cols-2 gap-x-6">
       <%= for event_type <- @event_types do %>
-        <EventType.event_type event_type={event_type} path={Routes.live_path(@socket, CalendlexWeb.EventTypeLive, event_type.slug)} />
+        <EventType.selector event_type={event_type} path={Routes.live_path(@socket, CalendlexWeb.EventTypeLive, event_type.slug)} />
       <% end %>
     </div>
   </div>
