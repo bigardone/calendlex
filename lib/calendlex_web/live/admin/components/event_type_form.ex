@@ -2,7 +2,6 @@ defmodule CalendlexWeb.Admin.Components.EventTypeForm do
   use CalendlexWeb, :live_component
 
   alias Calendlex.EventType
-  alias CalendlexWeb.LayoutView
   alias Phoenix.LiveComponent
 
   @impl LiveComponent
@@ -42,7 +41,7 @@ defmodule CalendlexWeb.Admin.Components.EventTypeForm do
   end
 
   defp input_classes(form, field, default_classes \\ "w-full p-2 border rounded-md") do
-    LayoutView.class_list([
+    class_list([
       {default_classes, true},
       {"border-red-500", Keyword.has_key?(form.errors, field)}
     ])

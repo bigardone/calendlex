@@ -46,7 +46,7 @@ defmodule CalendlexWeb do
       use Phoenix.LiveView,
         layout: {CalendlexWeb.LayoutView, "live.html"}
 
-      import CalendlexWeb.LayoutView
+      import CalendlexWeb.LiveViewHelpers
 
       alias Phoenix.LiveView
 
@@ -59,7 +59,7 @@ defmodule CalendlexWeb do
       use Phoenix.LiveView,
         layout: {CalendlexWeb.LayoutView, "admin.html"}
 
-      import CalendlexWeb.LayoutView
+      import CalendlexWeb.LiveViewHelpers
 
       alias Phoenix.LiveView
 
@@ -70,6 +70,8 @@ defmodule CalendlexWeb do
   def live_component do
     quote do
       use Phoenix.LiveComponent
+
+      import CalendlexWeb.LiveViewHelpers
 
       alias Phoenix.LiveComponent
 

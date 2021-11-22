@@ -2,8 +2,7 @@ defmodule CalendlexWeb.Admin.Components.Event do
   use CalendlexWeb, :live_component
 
   alias Calendlex.Event
-  alias CalendlexWeb.LayoutView
-  alias Phoenix.{LiveComponent, LiveView.JS}
+  alias Phoenix.LiveView.JS
 
   @impl LiveComponent
   def update(%{event: event, time_zone: time_zone}, socket) do
@@ -27,7 +26,7 @@ defmodule CalendlexWeb.Admin.Components.Event do
   defp cancelled_classes(event, classes) do
     cancelled = not Event.is_active(event)
 
-    LayoutView.class_list([
+    class_list([
       {classes, true},
       {"line-through", cancelled}
     ])
