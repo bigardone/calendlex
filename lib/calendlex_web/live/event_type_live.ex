@@ -4,7 +4,12 @@ defmodule CalendlexWeb.EventTypeLive do
   alias Timex.Duration
 
   @impl LiveView
-  def mount(%{"event_type_slug" => slug} = params, _session, socket) do
+  def mount(_params, _session, socket) do
+    {:ok, socket, temporary_assigns: [time_slots: []]}
+  end
+
+  @impl LiveView
+  def handle_params(%{"event_type_slug" => slug} = params, _uri, socket) do
     case Calendlex.get_event_type_by_slug(slug) do
       {:ok, event_type} ->
         socket =
@@ -14,26 +19,11 @@ defmodule CalendlexWeb.EventTypeLive do
           |> assign_dates(params)
           |> assign_time_slots(params)
 
-        {:ok, socket, temporary_assigns: [time_slots: []]}
+        {:noreply, socket}
 
       {:error, :not_found} ->
-        {:ok, socket, layout: {CalendlexWeb.LayoutView, "not_found.html"}}
+        {:noreply, socket}
     end
-  end
-
-  @impl LiveView
-  def handle_event("next_month", _, socket) do
-    socket.assigns.current
-    |> Timex.end_of_month()
-    |> Timex.add(Duration.from_days(1))
-    |> shift_month(socket)
-  end
-
-  def handle_event("previous_month", _, socket) do
-    socket.assigns.current
-    |> Timex.beginning_of_month()
-    |> Timex.add(Duration.from_days(-1))
-    |> shift_month(socket)
   end
 
   @impl LiveView
@@ -53,20 +43,27 @@ defmodule CalendlexWeb.EventTypeLive do
     {:noreply, socket}
   end
 
-  @impl LiveView
-  def handle_params(_unsigned_params, _uri, socket) do
-    {:noreply, socket}
-  end
-
   defp assign_dates(socket, params) do
     current = current_from_params(params, socket)
     beginning_of_month = Timex.beginning_of_month(current)
     end_of_month = Timex.end_of_month(current)
 
+    previous_month =
+      beginning_of_month
+      |> Timex.add(Duration.from_days(-1))
+      |> date_to_month()
+
+    next_month =
+      end_of_month
+      |> Timex.add(Duration.from_days(1))
+      |> date_to_month()
+
     socket
     |> assign(beginning_of_month: beginning_of_month)
     |> assign(current: current)
     |> assign(end_of_month: end_of_month)
+    |> assign(previous_month: previous_month)
+    |> assign(next_month: next_month)
   end
 
   defp assign_time_slots(socket, %{"date" => _}) do
@@ -93,20 +90,21 @@ defmodule CalendlexWeb.EventTypeLive do
     end
   end
 
+  defp current_from_params(%{"month" => month}, socket) do
+    case Timex.parse("#{month}-01", "{YYYY}-{0M}-{D}") do
+      {:ok, current} ->
+        NaiveDateTime.to_date(current)
+
+      _ ->
+        Timex.today(socket.assigns.time_zone)
+    end
+  end
+
   defp current_from_params(_, socket) do
     Timex.today(socket.assigns.time_zone)
   end
 
-  defp shift_month(current, socket) do
-    beginning_of_month = Timex.beginning_of_month(current)
-    end_of_month = Timex.end_of_month(current)
-
-    socket =
-      socket
-      |> assign(current: current)
-      |> assign(beginning_of_month: beginning_of_month)
-      |> assign(end_of_month: end_of_month)
-
-    {:noreply, socket}
+  defp date_to_month(date_time) do
+    Timex.format!(date_time, "{YYYY}-{0M}")
   end
 end

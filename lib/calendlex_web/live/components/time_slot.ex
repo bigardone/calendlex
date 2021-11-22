@@ -23,9 +23,11 @@ defmodule CalendlexWeb.Components.TimeSlot do
       ) do
     slot_string = DateTime.to_iso8601(time_slot)
 
-    {:noreply,
-     push_redirect(socket,
-       to: Routes.live_path(socket, CalendlexWeb.ScheduleEventLive, event_type.slug, slot_string)
-     )}
+    url =
+      socket
+      |> Routes.live_path(CalendlexWeb.ScheduleEventLive, event_type.slug, slot_string)
+      |> URI.decode()
+
+    {:noreply, push_redirect(socket, to: url)}
   end
 end

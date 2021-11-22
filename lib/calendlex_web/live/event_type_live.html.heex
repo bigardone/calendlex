@@ -26,12 +26,16 @@
           <%= Timex.format!(@current, "{Mshort} {YYYY}") %>
         </div>
         <div class="flex justify-end flex-1 text-right">
-          <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200" phx-click="previous_month">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200" phx-click="next_month">
-            <i class="fas fa-chevron-right"></i>
-          </button>
+          <%= live_patch to: Routes.live_path(@socket, CalendlexWeb.EventTypeLive, @event_type.slug, month: @previous_month) do %>
+            <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+          <% end %>
+          <%= live_patch to: Routes.live_path(@socket, CalendlexWeb.EventTypeLive, @event_type.slug, month: @next_month) do %>
+            <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          <% end %>
         </div>
       </div>
       <div class="mb-6 text-center uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
@@ -43,7 +47,12 @@
         <div class="text-xs">Sat</div>
         <div class="text-xs">Sun</div>
         <%= for i <- 0..@end_of_month.day - 1 do %>
-          <%= live_component CalendlexWeb.Components.CalendarDay, id: "day-#{i}", current: @current, date: Timex.shift(@beginning_of_month, days: i), time_zone: @time_zone %>
+          <.live_component
+            module={CalendlexWeb.Components.CalendarDay}
+            id={"day-#{i}"}
+            current={@current}
+            date={Timex.shift(@beginning_of_month, days: i)}
+            time_zone={@time_zone} />
         <% end %>
       </div>
       <div class="flex items-center gap-x-1">
@@ -60,7 +69,12 @@
         </header>
         <div class="flex-1 overflow-y-auto">
           <%= for time_slot <- @time_slots do %>
-            <%= live_component CalendlexWeb.Components.TimeSlot, id: "time_slot_#{time_slot}", time_slot: time_slot, time_zone: @time_zone, event_type: @event_type %>
+            <.live_component
+              module={CalendlexWeb.Components.TimeSlot}
+              id={"time_slot_#{time_slot}"}
+              time_slot={time_slot}
+              time_zone={@time_zone}
+              event_type={@event_type} />
           <% end %>
         </div>
       </div>
