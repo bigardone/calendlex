@@ -21,44 +21,15 @@
       <header class="mb-8">
           <h3 class="text-lg font-semibold text-gray-900">Select a date & time</h3>
       </header>
-      <div class="flex items-center mb-8">
-        <div class="flex-1">
-          <%= Timex.format!(@current, "{Mshort} {YYYY}") %>
-        </div>
-        <div class="flex justify-end flex-1 text-right">
-          <%= live_patch to: Routes.live_path(@socket, CalendlexWeb.EventTypeLive, @event_type.slug, month: @previous_month) do %>
-            <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-          <% end %>
-          <%= live_patch to: Routes.live_path(@socket, CalendlexWeb.EventTypeLive, @event_type.slug, month: @next_month) do %>
-            <button class="flex items-center justify-center w-10 h-10 text-blue-700 align-middle rounded-full hover:bg-blue-200">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-          <% end %>
-        </div>
-      </div>
-      <div class="mb-6 text-center uppercase calendar grid grid-cols-7 gap-y-2 gap-x-2">
-        <div class="text-xs">Mon</div>
-        <div class="text-xs">Tue</div>
-        <div class="text-xs">Wed</div>
-        <div class="text-xs">Thu</div>
-        <div class="text-xs">Fri</div>
-        <div class="text-xs">Sat</div>
-        <div class="text-xs">Sun</div>
-        <%= for i <- 0..@end_of_month.day - 1 do %>
-          <.live_component
-            module={CalendlexWeb.Components.CalendarDay}
-            id={"day-#{i}"}
-            current={@current}
-            date={Timex.shift(@beginning_of_month, days: i)}
-            time_zone={@time_zone} />
-        <% end %>
-      </div>
-      <div class="flex items-center gap-x-1">
-        <i class="fas fa-globe-americas"></i>
-        <%= @time_zone %>
-      </div>
+      <EventType.calendar
+              id="calendar"
+              current_path={Routes.live_path(@socket, CalendlexWeb.EventTypeLive, @event_type.slug)}
+              previous_month={@previous_month}
+              next_month={@next_month}
+              current={@current}
+              end_of_month={@end_of_month}
+              beginning_of_month={@beginning_of_month}
+              time_zone={@time_zone} />
     </div>
     <%= if @time_slots !== [] do %>
       <div class="pl-8 overflow-y-auto border-l border-gray-100 w-80 h-96">
@@ -69,9 +40,9 @@
         </header>
         <div class="flex-1 overflow-y-auto">
           <%= for time_slot <- @time_slots do %>
-            <.live_component
-              module={CalendlexWeb.Components.TimeSlot}
+            <EventType.time_slot
               id={"time_slot_#{time_slot}"}
+              socket={@socket}
               time_slot={time_slot}
               time_zone={@time_zone}
               event_type={@event_type} />

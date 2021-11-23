@@ -1,44 +1,31 @@
 defmodule CalendlexWeb.EventTypeLive do
   use CalendlexWeb, :live_view
 
+  alias CalendlexWeb.Components.EventType
   alias Timex.Duration
 
   @impl LiveView
-  def mount(_params, _session, socket) do
-    {:ok, socket, temporary_assigns: [time_slots: []]}
-  end
-
-  @impl LiveView
-  def handle_params(%{"event_type_slug" => slug} = params, _uri, socket) do
+  def mount(%{"event_type_slug" => slug}, _session, socket) do
     case Calendlex.get_event_type_by_slug(slug) do
       {:ok, event_type} ->
         socket =
           socket
           |> assign(event_type: event_type)
           |> assign(page_title: event_type.name)
-          |> assign_dates(params)
-          |> assign_time_slots(params)
 
-        {:noreply, socket}
+        {:ok, socket, temporary_assigns: [time_slots: []]}
 
       {:error, :not_found} ->
-        {:noreply, socket}
+        {:ok, socket, layout: {CalendlexWeb.LayoutView, "not_found.html"}}
     end
   end
 
   @impl LiveView
-  def handle_info({:select_day, date}, socket) do
+  def handle_params(params, _uri, socket) do
     socket =
       socket
-      |> assign(current: date)
-      |> assign_time_slots(%{"date" => date})
-      |> push_patch(
-        to:
-          Routes.live_path(socket, CalendlexWeb.EventTypeLive, socket.assigns.event_type.slug,
-            date: Date.to_iso8601(date)
-          ),
-        replace: true
-      )
+      |> assign_dates(params)
+      |> assign_time_slots(params)
 
     {:noreply, socket}
   end
