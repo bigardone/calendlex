@@ -31,7 +31,7 @@ defmodule CalendlexWeb.EventTypeLive do
   end
 
   defp assign_dates(socket, params) do
-    current = current_from_params(params, socket)
+    current = current_from_params(socket, params)
     beginning_of_month = Timex.beginning_of_month(current)
     end_of_month = Timex.end_of_month(current)
 
@@ -67,7 +67,7 @@ defmodule CalendlexWeb.EventTypeLive do
 
   defp assign_time_slots(socket, _), do: socket
 
-  defp current_from_params(%{"date" => date}, socket) do
+  defp current_from_params(socket, %{"date" => date}) do
     case Timex.parse(date, "{YYYY}-{0M}-{D}") do
       {:ok, current} ->
         NaiveDateTime.to_date(current)
@@ -77,7 +77,7 @@ defmodule CalendlexWeb.EventTypeLive do
     end
   end
 
-  defp current_from_params(%{"month" => month}, socket) do
+  defp current_from_params(socket, %{"month" => month}) do
     case Timex.parse("#{month}-01", "{YYYY}-{0M}-{D}") do
       {:ok, current} ->
         NaiveDateTime.to_date(current)
@@ -87,7 +87,7 @@ defmodule CalendlexWeb.EventTypeLive do
     end
   end
 
-  defp current_from_params(_, socket) do
+  defp current_from_params(socket, _) do
     Timex.today(socket.assigns.time_zone)
   end
 
