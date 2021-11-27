@@ -69,3 +69,25 @@
 .phx-no-feedback.invalid-feedback, .phx-no-feedback .invalid-feedback {
   display: none;
 }
+
+.grid-column-1 {
+  grid-column: 1;
+}
+.grid-column-2 {
+  grid-column: 2;
+}
+.grid-column-3 {
+  grid-column: 3;
+}
+.grid-column-4 {
+  grid-column: 4;
+}
+.grid-column-5 {
+  grid-column: 5;
+}
+.grid-column-6 {
+  grid-column: 6;
+}
+.grid-column-7 {
+  grid-column: 7;
+}

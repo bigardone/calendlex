@@ -62,7 +62,8 @@ defmodule CalendlexWeb.Components.EventType do
         <div class="text-xs">Sun</div>
         <%= for i <- 0..@end_of_month.day - 1 do %>
           <EventType.day
-            id={"calender-day-#{i}"}
+            id={"day-#{i}"}
+            index={i}
             current_path={@current_path}
             date={Timex.shift(@beginning_of_month, days: i)}
             time_zone={@time_zone} />
@@ -76,18 +77,29 @@ defmodule CalendlexWeb.Components.EventType do
     """
   end
 
-  def day(%{current_path: current_path, date: date, time_zone: time_zone} = assigns) do
+  def day(%{index: index, current_path: current_path, date: date, time_zone: time_zone} = assigns) do
     date_path = build_path(current_path, %{date: date})
+    disabled = Timex.compare(date, Timex.today(time_zone)) == -1
+    weekday = Timex.weekday(date, :monday)
+
+    class =
+      class_list([
+        {"grid-column-#{weekday}", index == 0},
+        {"content-center w-10 h-10 rounded-full justify-center items-center flex", true},
+        {"bg-blue-50 text-blue-600 font-bold hover:bg-blue-200", not disabled},
+        {"text-gray-200 cursor-default pointer-events-none", disabled}
+      ])
 
     assigns =
       assigns
-      |> assign(weekday: Timex.weekday(date, :monday))
-      |> assign(disabled: Timex.compare(date, Timex.today(time_zone)) == -1)
+      |> assign(weekday: weekday)
+      |> assign(disabled: disabled)
       |> assign(:text, Timex.format!(date, "{D}"))
       |> assign(:date_path, date_path)
+      |> assign(:class, class)
 
     ~H"""
-    <%= live_patch to: @date_path, class: day_classes(@weekday, @disabled), disabled: @disabled do %>
+    <%= live_patch to: @date_path, class: @class, disabled: @disabled do %>
       <%= @text %>
     <% end %>
     """
@@ -123,15 +135,6 @@ defmodule CalendlexWeb.Components.EventType do
       <%= @text %>
     <% end %>
     """
-  end
-
-  defp day_classes(weekday, disabled) do
-    class_list([
-      {"content-center w-10 h-10 rounded-full justify-center items-center flex col-start-#{weekday}",
-       true},
-      {"bg-blue-50 text-blue-600 font-bold hover:bg-blue-200", not disabled},
-      {"text-gray-200 cursor-default pointer-events-none", disabled}
-    ])
   end
 
   defp build_path(current_path, params) do
