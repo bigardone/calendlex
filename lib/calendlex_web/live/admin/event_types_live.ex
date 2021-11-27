@@ -5,16 +5,22 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
 
   @impl LiveView
   def mount(_params, _session, socket) do
+    {:ok, socket, temporary_assigns: [event_types: []]}
+  end
+
+  @impl LiveView
+  def handle_params(_, _, socket) do
     event_types = Calendlex.available_event_types()
 
     socket =
       socket
       |> assign(event_types: event_types)
+      |> assign(event_types_count: length(event_types))
       |> assign(section: "event_types")
       |> assign(page_title: "Event types")
       |> assign(delete_event_type: nil)
 
-    {:ok, socket, temporary_assigns: [event_types: []]}
+    {:noreply, socket}
   end
 
   @impl LiveView
@@ -30,9 +36,8 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
 
     socket =
       socket
-      |> assign(delete_event_type: nil)
-      |> update(:event_types, fn _ -> Calendlex.available_event_types() end)
       |> put_flash(:info, "Deleted")
+      |> push_patch(to: Routes.live_path(socket, __MODULE__))
 
     {:noreply, socket}
   end

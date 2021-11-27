@@ -7,8 +7,10 @@
   </div>
 </div>
 <div class="mt-4 grid grid-cols-3 gap-6">
-  <%= for event_type <- @event_types do %>
-    <.live_component module={CalendlexWeb.Admin.Components.EventType} id={"event_type_" <> event_type.id} event_type={event_type} />
+  <%= if @event_types_count > 0 do %>
+    <%= for event_type <- @event_types do %>
+      <.live_component module={CalendlexWeb.Admin.Components.EventType} id={"event_type_" <> event_type.id} event_type={event_type} />
+    <% end %>
   <% end %>
 </div>
 <%= if @delete_event_type  do %>
