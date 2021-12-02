@@ -12,7 +12,9 @@ config :calendlex,
   generators: [binary_id: true],
   owner: %{
     name: "Bigardone",
-    time_zone: "Europe/Madrid"
+    time_zone: "Europe/Madrid",
+    day_start: 9,
+    day_end: 19
   },
   basic_auth: [username: "admin", password: "admin"]
 

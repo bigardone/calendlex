@@ -2,7 +2,7 @@ defmodule CalendlexWeb.EventTypeLive do
   use CalendlexWeb, :live_view
 
   alias CalendlexWeb.Components.EventType
-  alias Timex.Duration
+ alias Timex.Duration
 
   @impl LiveView
   def mount(%{"event_type_slug" => slug}, _session, socket) do
@@ -55,10 +55,10 @@ defmodule CalendlexWeb.EventTypeLive do
 
   defp assign_time_slots(socket, %{"date" => _}) do
     date = socket.assigns.current
-    owner_time_zone = socket.assigns.owner.time_zone
+    time_zone = socket.assigns.owner.time_zone
     event_duration = socket.assigns.event_type.duration
 
-    time_slots = Calendlex.build_time_slots(date, owner_time_zone, event_duration)
+    time_slots = Calendlex.build_time_slots(date, time_zone, event_duration)
 
     socket
     |> assign(time_slots: time_slots)

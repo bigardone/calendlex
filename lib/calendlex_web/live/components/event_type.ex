@@ -62,7 +62,6 @@ defmodule CalendlexWeb.Components.EventType do
         <div class="text-xs">Sun</div>
         <%= for i <- 0..@end_of_month.day - 1 do %>
           <EventType.day
-            id={"day-#{i}"}
             index={i}
             current_path={@current_path}
             date={Timex.shift(@beginning_of_month, days: i)}
@@ -92,7 +91,6 @@ defmodule CalendlexWeb.Components.EventType do
 
     assigns =
       assigns
-      |> assign(weekday: weekday)
       |> assign(disabled: disabled)
       |> assign(:text, Timex.format!(date, "{D}"))
       |> assign(:date_path, date_path)
