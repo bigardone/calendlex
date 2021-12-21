@@ -6,13 +6,18 @@
     <% end %>
   </div>
 </div>
-<div class="mt-4 grid grid-cols-3 gap-6">
-  <%= if @event_types_count > 0 do %>
+<%= if @event_types_count > 0 do %>
+  <div class="mt-4 grid grid-cols-3 gap-6">
     <%= for event_type <- @event_types do %>
       <.live_component module={CalendlexWeb.Admin.Components.EventType} id={"event_type_" <> event_type.id} event_type={event_type} />
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% else %>
+  <div class="mt-4">
+    <h3 class="mb-2 text-xl">You don't have any event types yet.</h3>
+    <p class="">You'll want to add an event type to allow people to schedule with you.</p>
+  </div>
+<% end %>
 <%= if @delete_event_type  do %>
   <Modal.show>
     <:header>Delete <%= @delete_event_type.name %></:header>
