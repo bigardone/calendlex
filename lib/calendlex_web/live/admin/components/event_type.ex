@@ -4,8 +4,8 @@ defmodule CalendlexWeb.Admin.Components.EventType do
   alias CalendlexWeb.Admin.Components.Dropdown
 
   @impl LiveComponent
-  def update(%{event_type: event_type}, socket) do
-    {:ok, assign(socket, event_type: event_type)}
+  def mount(socket) do
+    {:ok, socket}
   end
 
   @impl LiveComponent
