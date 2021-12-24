@@ -2,12 +2,11 @@ defmodule CalendlexWeb.Admin.Components.Modal do
   use Phoenix.Component
 
   def show(assigns) do
-    ~L"""
+    ~H"""
     <div class="fixed inset-0 z-20 overflow-y-auto"
       phx-capture-click="close"
       phx-window-keydown="close"
-      phx-key="escape"
-    >
+      phx-key="escape">
       <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 bg-white bg-opacity-75 transition-opacity" aria-hidden="true"></div>
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
@@ -30,24 +29,22 @@ defmodule CalendlexWeb.Admin.Components.Modal do
   end
 
   def cancel_button(assigns) do
-    ~L"""
-        <button
-          class="flex-1 px-4 py-2 border border-gray-800 rounded-full"
-          phx-click="close"
-        >
-          <%= render_slot(@inner_block) %>
-        </button>
+    ~H"""
+    <button
+      class="flex-1 px-4 py-2 border border-gray-800 rounded-full"
+      phx-click="close">
+      <%= render_slot(@inner_block) %>
+    </button>
     """
   end
 
   def confirm_button(assigns) do
-    ~L"""
-        <button
-          class="flex-1 px-4 py-2 text-white bg-blue-600 rounded-full"
-          phx-click="<%= @event %>"
-        >
-          <%= render_slot(@inner_block) %>
-        </button>
+    ~H"""
+    <button
+      class="flex-1 px-4 py-2 text-white bg-blue-600 rounded-full"
+      phx-click={@event}>
+      <%= render_slot(@inner_block) %>
+    </button>
     """
   end
 end
