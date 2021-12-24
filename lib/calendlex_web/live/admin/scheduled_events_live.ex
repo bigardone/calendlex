@@ -2,6 +2,7 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
   use CalendlexWeb, :admin_live_view
 
   alias CalendlexWeb.Admin.Components.Modal
+  alias Phoenix.LiveView.JS
 
   @upcoming_period "upcoming"
   @past_period "past"
@@ -19,7 +20,6 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
       |> assign(page_title: "Scheduled events")
       |> assign(period: period)
       |> assign(cancel_event: nil)
-      |> assign(show_filter: false)
       |> assign(event_types: event_types)
       |> assign(filter_form: %{"period" => period, "status" => ["active"]})
 
@@ -51,10 +51,6 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
     {:ok, event} = Calendlex.get_event_by_id(id)
 
     {:noreply, assign(socket, cancel_event: event)}
-  end
-
-  def handle_event("show_filter", _, %{assigns: %{show_filter: show_filter}} = socket) do
-    {:noreply, assign(socket, show_filter: not show_filter)}
   end
 
   def handle_event("close", _, socket) do
@@ -117,4 +113,18 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
   defp period_from_params(@past_period), do: @past_period
 
   defp period_from_params(_), do: @upcoming_period
+
+  defp show_filter(js \\ %JS{}) do
+    js
+    |> JS.add_class("hidden", to: "#show_filter")
+    |> JS.remove_class("hidden", to: "#hide_filter")
+    |> JS.remove_class("hidden", to: "#filter_container")
+  end
+
+  defp hide_filter(js \\ %JS{}) do
+    js
+    |> JS.remove_class("hidden", to: "#show_filter")
+    |> JS.add_class("hidden", to: "#hide_filter")
+    |> JS.add_class("hidden", to: "#filter_container")
+  end
 end

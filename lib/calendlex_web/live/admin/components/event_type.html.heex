@@ -30,13 +30,13 @@
     </div>
   <% end %>
   <footer class="flex items-center h-16 px-4 mt-4 -m-4 text-sm border-t border-gray-200">
-    <div
+    <button
         id={"clipboard_#{@event_type.id}"}
         class="text-blue-500"
         data-content={Routes.live_url(@socket, CalendlexWeb.EventTypeLive, @event_type.slug)}
         phx-hook="Clipboard">
       <i class="far fa-clone"></i> Copy link
-    </div>
+    </button>
   </footer>
 </div>
 

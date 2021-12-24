@@ -13,11 +13,11 @@ defmodule CalendlexWeb.Admin.Components.Dropdown do
     >
       <div
         class="relative dropdown"
-        phx-click-away="<%= JS.hide(to: "##{@id} .dropdown-content", transition: "hidden") %>"
+        phx-click-away="<%= JS.hide(to: "##{@id} .dropdown-content", transition: "hidden", time: 0) %>"
       >
         <div
           class="flex items-baseline cursor-pointer gap-x-1 dropdown-trigger"
-          phx-click="<%= JS.toggle(to: "##{@id} .dropdown-content", in: "block", out: "hidden") %>"
+          phx-click="<%= JS.toggle(to: "##{@id} .dropdown-content", in: "block", out: "hidden", time: 0) %>"
         >
           <%= render_slot(@trigger) %>
         </div>

@@ -4,26 +4,27 @@
     <%= live_patch "Upcoming", to: Routes.live_path(@socket, CalendlexWeb.Admin.ScheduledEventsLive, period: upcoming_period()), class: nav_link_classes(@period == upcoming_period()) %>
     <%= live_patch "Past", to: Routes.live_path(@socket, CalendlexWeb.Admin.ScheduledEventsLive, period: past_period()), class: nav_link_classes(@period == past_period()) %>
     <div class="ml-auto">
-      <%= if !@show_filter do %>
-        <button
-            class="px-4 py-1 text-gray-500 rounded rounded-md hover:bg-gray-50 transition-colors"
-            phx-click="show_filter">
-          <i class="inline-block fas fa-sliders-h transform rotate-90"></i> Filter
-        </button>
-      <% else %>
-        <button
-            class="px-4 py-1 text-white bg-gray-400 rounded rounded-md"
-            phx-click="show_filter">
-          <i class="fas fa-times"></i> Close
-        </button>
-      <% end %>
+      <button
+          id="show_filter"
+          class="px-4 py-1 text-gray-500 rounded rounded-md hover:bg-gray-50 transition-colors"
+          phx-click={show_filter()}>
+        <i class="inline-block fas fa-sliders-h transform rotate-90"></i> Filter
+      </button>
+      <button
+          id="hide_filter"
+          class="hidden px-4 py-1 text-white bg-gray-400 rounded rounded-md"
+          phx-click={hide_filter()}>
+        <i class="fas fa-times"></i> Close
+      </button>
     </div>
   </nav>
-  <%= if @show_filter do %>
-    <div class="px-6 py-4 -mx-6 bg-white border-t border-gray-200">
-      <.live_component module={CalendlexWeb.Admin.Components.EventsFilterForm} id="events_filter_form" form={@filter_form} event_types={@event_types} />
-    </div>
-  <% end %>
+  <div id="filter_container" class="hidden px-6 py-4 -mx-6 bg-white border-t border-gray-200">
+    <.live_component
+       module={CalendlexWeb.Admin.Components.EventsFilterForm}
+       id="events_filter_form"
+       form={@filter_form}
+       event_types={@event_types} />
+  </div>
   <%= if Enum.empty?(@events) do %>
     <div class="flex items-center justify-center px-6 py-4 -mx-6 bg-white border-t border-gray-200 h-52">
       <div class="text-center text-gray-400">
