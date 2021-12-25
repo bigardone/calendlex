@@ -6,17 +6,16 @@
   <div class="w-3/5 mb-6">
     <%= label f, :name, class: "block mb-2 text-sm" %>
     <%= text_input f, :name, class: "w-full p-2 border rounded-md", autofocus: "", required: "" %>
+    <div class="mt-2 text-sm text-blue-500">
+      <span class="text-gray-500">Public url:</span>
+      <%= public_url(@socket, @changeset) %>
+    </div>
     <%= error_tag f, :name %>
   </div>
   <div class="w-3/5 mb-6">
     <%= label f, :description, class: "block mb-2 text-sm" %>
     <%= textarea f, :description, class: "w-full p-2 border h-36 rounded-md" %>
     <%= error_tag f, :description %>
-  </div>
-  <div class="w-3/5 mb-6">
-    <%= label f, :slug, class: "block mb-2 text-sm" %>
-    <%= text_input f, :slug, class: input_classes(f, :slug), readonly: "" %>
-    <%= error_tag f, :slug %>
   </div>
   <div class="w-3/5 mb-6">
     <%= label f, :duration, class: "block mb-2 text-sm" %>

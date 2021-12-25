@@ -9,8 +9,14 @@ defmodule CalendlexWeb.Admin.Components.EventTypeForm do
         %{event_type: %EventType{color: current_color} = event_type, changeset: changeset},
         socket
       ) do
-    {:ok,
-     assign(socket, event_type: event_type, changeset: changeset, current_color: current_color)}
+    socket =
+      socket
+      |> assign(changeset: changeset)
+      |> assign(event_type: event_type)
+      |> assign(current_color: current_color)
+      |> assign(public_url: "")
+
+    {:ok, socket}
   end
 
   @impl LiveComponent
@@ -40,10 +46,8 @@ defmodule CalendlexWeb.Admin.Components.EventTypeForm do
     "inline-block w-8 h-8 #{color}-bg rounded-full"
   end
 
-  defp input_classes(form, field, default_classes \\ "w-full p-2 border rounded-md") do
-    class_list([
-      {default_classes, true},
-      {"border-red-500", Keyword.has_key?(form.errors, field)}
-    ])
+  defp public_url(socket, changeset) do
+    slug = Map.get(changeset.data, :slug) || Map.get(changeset.changes, :slug, "")
+    Routes.live_url(socket, CalendlexWeb.EventTypeLive, slug)
   end
 end
