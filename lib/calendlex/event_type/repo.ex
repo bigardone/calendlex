@@ -53,7 +53,7 @@ defmodule Calendlex.EventType.Repo do
   def delete(%EventType{name: name, slug: slug} = event_type) do
     params = %{
       name: "#{name} (deleted)",
-      slug: "#{slug}-deleted",
+      slug: "#{slug}-deleted-#{:os.system_time(:millisecond)}",
       deleted_at: DateTime.utc_now()
     }
 
