@@ -30,6 +30,12 @@ defmodule Calendlex.EventType do
     |> unique_constraint(:slug, name: "event_types_slug_index")
   end
 
+  def delete_changeset(event_type, attrs) do
+    event_type
+    |> cast(attrs, @fields)
+    |> validate_required(@required_fields)
+  end
+
   defp build_slug(%{changes: %{name: name}} = changeset) do
     put_change(changeset, :slug, Slug.slugify(name))
   end

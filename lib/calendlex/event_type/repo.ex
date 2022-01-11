@@ -58,7 +58,7 @@ defmodule Calendlex.EventType.Repo do
     }
 
     event_type
-    |> EventType.changeset(params)
+    |> EventType.delete_changeset(params)
     |> Repo.update()
   end
 end

@@ -28,6 +28,10 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
     {:noreply, assign(socket, delete_event_type: event_type)}
   end
 
+  def handle_info(:clone_error, socket) do
+    {:noreply, put_flash(socket, :error, "Similar event type already exists")}
+  end
+
   @impl LiveView
   def handle_event("delete", _, socket) do
     event_type = socket.assigns.delete_event_type
