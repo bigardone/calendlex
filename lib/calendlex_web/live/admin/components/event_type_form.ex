@@ -42,10 +42,6 @@ defmodule CalendlexWeb.Admin.Components.EventTypeForm do
     {:noreply, socket}
   end
 
-  defp color_classes(color) do
-    "inline-block w-8 h-8 #{color}-bg rounded-full"
-  end
-
   defp public_url(socket, changeset) do
     slug = Map.get(changeset.data, :slug) || Map.get(changeset.changes, :slug, "")
     Routes.live_url(socket, CalendlexWeb.EventTypeLive, slug)
