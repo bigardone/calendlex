@@ -22,11 +22,6 @@ defmodule CalendlexWeb.Admin.EditEventTypeLive do
   end
 
   @impl LiveView
-  def handle_event("build_slug", _, socket) do
-    {:noreply, socket}
-  end
-
-  @impl LiveView
   def handle_info({:submit, params}, %{assigns: %{event_type: event_type}} = socket) do
     event_type
     |> Calendlex.update_event_type(params)
