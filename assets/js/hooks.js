@@ -1,7 +1,14 @@
 const Hooks = {};
 
 Hooks.Flash = {
+  mounted() {
+    this.initFlash();
+  },
   updated() {
+    this.initFlash();
+  },
+
+  initFlash() {
     const flash = this.el.querySelector('.flash');
 
     if (flash) {
