@@ -1,12 +1,12 @@
 <div class="container flex justify-end py-6 mx-auto">
-  <CalendlexWeb.Admin.Components.Dropdown.show id="main_nav" class="">
+  <CalendlexWeb.Admin.Components.Dropdown.main id="main_nav" class="">
     <:trigger>
       <span class="font-bold text-gray-700"><i class="text-sm fas fa-bars"></i> Menu</span>
     </:trigger>
     <div class="w-48">
       <%= live_redirect to: Routes.live_path(@socket, CalendlexWeb.Admin.EventTypesLive), class: "cursor-pointer px-4 py-2 block hover:bg-gray-200" do %>Home<% end %>
     </div>
-  </CalendlexWeb.Admin.Components.Dropdown.show>
+  </CalendlexWeb.Admin.Components.Dropdown.main>
 </div>
 <main role="main" class="flex-1 pt-20">
   <p class="alert alert-info" role="alert"
