@@ -13,10 +13,10 @@
     </header>
   </div>
   <section class="container flex-1 w-3/5 py-12 mx-auto">
-    <div id="flash_info" phx-hook="Flash">
+    <div id="flash" phx-hook="Flash">
       <%= if Map.has_key?(@flash, "info") do  %>
         <div
-            class="fixed px-6 py-2 text-white uppercase bg-green-400 border border-green-500 flash alert alert-info top-10 left-1/2 rounded-md bg-opacity-80"
+            class="fixed px-6 py-2 text-white uppercase bg-green-400 border border-green-500 flash alert alert-info top-10 left-1/2 rounded-md bg-opacity-80 -translate-x-1/2"
             role="alert"
             phx-click="lv:clear-flash"
             phx-value-key="info"
@@ -24,12 +24,10 @@
             <%= live_flash(@flash, :info) %>
         </div>
       <% end %>
-    </div>
 
-    <div id="flash_error" phx-hook="Flash">
       <%= if Map.has_key?(@flash, "error") do  %>
         <div
-            class="fixed px-6 py-2 text-white uppercase bg-red-400 border border-red-500 flash alert alert-error top-10 left-1/2 rounded-md bg-opacity-80"
+            class="fixed px-6 py-2 text-white uppercase bg-red-400 border border-red-500 flash alert alert-error top-10 left-1/2 rounded-md bg-opacity-80 -translate-x-1/2"
             role="alert"
             phx-click="lv:clear-flash"
             phx-value-key="error"

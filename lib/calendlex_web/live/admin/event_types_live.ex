@@ -29,7 +29,7 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
   end
 
   def handle_info(:clone_error, socket) do
-    {:noreply, put_flash(socket, :error, "Similar event type already exists")}
+    {:noreply, put_flash(socket, :error, "A similar event type already exists")}
   end
 
   @impl LiveView
