@@ -49,15 +49,9 @@ defmodule Calendlex.EventType.Repo do
     |> insert()
   end
 
-  def delete(%EventType{name: name, slug: slug} = event_type) do
-    params = %{
-      name: "#{name} (deleted)",
-      slug: "#{slug}-deleted-#{:os.system_time(:millisecond)}",
-      deleted_at: DateTime.utc_now()
-    }
-
+  def delete(event_type) do
     event_type
-    |> EventType.delete_changeset(params)
+    |> EventType.delete_changeset()
     |> Repo.update()
   end
 end

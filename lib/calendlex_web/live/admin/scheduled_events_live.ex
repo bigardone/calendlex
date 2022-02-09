@@ -53,7 +53,7 @@ defmodule CalendlexWeb.Admin.ScheduledEventsLive do
     {:noreply, assign(socket, cancel_event: event)}
   end
 
-  def handle_event("close", _, socket) do
+  def handle_event("modal_close", _, socket) do
     {:noreply, assign(socket, cancel_event: nil)}
   end
 

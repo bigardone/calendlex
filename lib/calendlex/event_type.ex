@@ -1,6 +1,7 @@
 defmodule Calendlex.EventType do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Ecto.Changeset
 
   alias __MODULE__
 
@@ -30,9 +31,9 @@ defmodule Calendlex.EventType do
     |> unique_constraint(:slug, name: "event_types_slug_index")
   end
 
-  def delete_changeset(event_type, attrs) do
+  def delete_changeset(event_type) do
     event_type
-    |> cast(attrs, @fields)
+    |> with_deleted_changes()
     |> validate_required(@required_fields)
   end
 
@@ -41,4 +42,12 @@ defmodule Calendlex.EventType do
   end
 
   defp build_slug(changeset), do: changeset
+
+  defp with_deleted_changes(%{name: name, slug: slug} = event_type) do
+    event_type
+    |> Changeset.change()
+    |> put_change(:name, "#{name} (deleted)")
+    |> put_change(:slug, "#{slug}-deleted-#{:os.system_time(:millisecond)}")
+    |> put_change(:deleted_at, DateTime.truncate(DateTime.utc_now(), :second))
+  end
 end

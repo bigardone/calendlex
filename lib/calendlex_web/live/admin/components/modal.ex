@@ -4,8 +4,7 @@ defmodule CalendlexWeb.Admin.Components.Modal do
   def show(assigns) do
     ~H"""
     <div class="fixed inset-0 z-20 overflow-y-auto"
-      phx-capture-click="close"
-      phx-window-keydown="close"
+      phx-window-keydown="modal_close"
       phx-key="escape">
       <div class="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div class="fixed inset-0 bg-white bg-opacity-75 transition-opacity" aria-hidden="true"></div>
@@ -32,7 +31,7 @@ defmodule CalendlexWeb.Admin.Components.Modal do
     ~H"""
     <button
       class="flex-1 px-4 py-2 border border-gray-800 rounded-full"
-      phx-click="close">
+      phx-click="modal_close">
       <%= render_slot(@inner_block) %>
     </button>
     """

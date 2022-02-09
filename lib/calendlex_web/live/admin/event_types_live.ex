@@ -46,7 +46,7 @@ defmodule CalendlexWeb.Admin.EventTypesLive do
     {:noreply, socket}
   end
 
-  def handle_event("close", _, socket) do
+  def handle_event("modal_close", _, socket) do
     {:noreply, assign(socket, delete_event_type: nil)}
   end
 end
